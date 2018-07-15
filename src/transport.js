@@ -71,7 +71,7 @@ module.exports = function (swarm) {
 
       let freshMultiaddrs = []
 
-      const createListeners = multiaddrs.map((ma) => {
+      const createListeners = multiaddrs.map((ma, i) => {
         return (cb) => {
           const done = once(cb)
           const listener = transport.createListener(handler)
@@ -79,7 +79,11 @@ module.exports = function (swarm) {
 
           listener.listen(ma, (err) => {
             if (err) {
-              return done(err)
+              return done({
+                err: err,
+                address: ma,
+                index: i
+              })
             }
             listener.removeListener('error', done)
             listener.getAddrs((err, addrs) => {

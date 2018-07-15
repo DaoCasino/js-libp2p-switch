@@ -88,8 +88,13 @@ module.exports = function (swarm) {
             listener.removeListener('error', done)
             listener.getAddrs((err, addrs) => {
               if (err) {
-                return done(err)
-              }
+                const index = swarm._peerInfo.multiaddrs.toArray().indexOf(multiaddrs[0])
+                return callback({
+                  err: err,
+                  index: index,
+                  address: multiaddrs[0]
+                })
+                    }
               freshMultiaddrs = freshMultiaddrs.concat(addrs)
               transport.listeners.push(listener)
               done()

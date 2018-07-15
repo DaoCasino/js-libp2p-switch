@@ -94,7 +94,7 @@ module.exports = function (swarm) {
                   index: index,
                   address: multiaddrs[0]
                 })
-                    }
+              }
               freshMultiaddrs = freshMultiaddrs.concat(addrs)
               transport.listeners.push(listener)
               done()
